@@ -5,23 +5,23 @@ import java.util.Objects;
 
 public class BinaryTreeHelper {
 
-  public static <T extends Comparable> BinaryTreeNode<T>  create(T[] arr) {
-   BinaryTreeNode<T>  root = null;
-    for (T t : arr) {
-     if (Objects.isNull(root))  {
-       root = new BinaryTreeNode<>(t);
-       continue;
-     }
-     insert(root, t);
+  public static <T extends Comparable> BinaryTreeNode<T> create(T[] arr) {
+    if (null == arr || 0 == arr.length) {
+      return new BinaryTreeNode<>(null);
+    }
+    BinaryTreeNode<T> root = new BinaryTreeNode<>(arr[0]);
+    for (int i = 1; i < arr.length; i++) {
+      insert(root, arr[i]);
     }
     return root;
   }
 
   private static <T extends Comparable> void insert(BinaryTreeNode<T> root, T t) {
-    if (root.getValue().compareTo(t) < 0) {
+    if (t.compareTo(root.getValue()) < 0) {
       // 如果存在，则进行递归
       if (Objects.nonNull(root.getLeftChild())) {
         insert(root.getLeftChild(), t);
+        return;
       }
       // 不存在则插入
       BinaryTreeNode<T> child = new BinaryTreeNode<>(t, root);
@@ -31,6 +31,7 @@ public class BinaryTreeHelper {
       // 如果存在，则进行递归
       if (Objects.nonNull(root.getRightChild())) {
         insert(root.getRightChild(), t);
+        return;
       }
       // 不存在则插入
       BinaryTreeNode<T> child = new BinaryTreeNode<>(t, root);
