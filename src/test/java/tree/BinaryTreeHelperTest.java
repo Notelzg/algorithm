@@ -5,6 +5,19 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 class BinaryTreeHelperTest {
+  @Test
+  public void t() {
+    boolean rs = (double) 1.1 == (float) 1.1;
+    System.out.println(rs);
+//    System.out.printf("%s, %x, ", Double.doubleToLongBits(1.1), (float)1.1);
+    System.out.println(Integer.toBinaryString(Float.floatToIntBits((float) 0.1)));
+    System.out.println(Long.toBinaryString(Double.doubleToLongBits(0.1)));
+    System.out.println(Long.toBinaryString(Double.doubleToLongBits((float)0.1)));
+    System.out.println(Double.toHexString(1.1));
+
+    System.out.println(Math.floor(3.9));
+    System.out.println(Math.floor(-3.9));
+  }
 
   @Test
   void create() {
