@@ -48,4 +48,11 @@ public class BinaryTreeNode<T extends Comparable> {
   public void setParent(BinaryTreeNode<T> parent) {
     this.parent = parent;
   }
+
+  @Override
+  public String toString() {
+    return "BinaryTreeNode{" +
+        "value=" + value +
+        '}';
+  }
 }
