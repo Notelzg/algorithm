@@ -2,20 +2,29 @@ package dynamic.matixmultiplay;
 
 public class Result {
   // 最优解的值
-  int expect;
+  Object expect;
   // 最优解的路径
   String path;
 
-  public Result(int expect, String path) {
+  public Result(Object expect, String path) {
     this.expect = expect;
     this.path = path;
   }
 
-  public int getExpect() {
+
+  public Object getExpect() {
     return expect;
   }
 
   public String getPath() {
     return path;
+  }
+
+  @Override
+  public String toString() {
+    return "Result{" +
+        "expect=" + expect +
+        ", path='" + path + '\'' +
+        '}';
   }
 }
