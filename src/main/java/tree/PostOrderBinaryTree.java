@@ -26,7 +26,7 @@ public class PostOrderBinaryTree {
       currentNode = stack.peek().getRightChild();
       if (null == currentNode || preNode == currentNode) {
         preNode = stack.pop();
-        System.out.println(preNode.getValue());
+//        System.out.println(preNode.getValue());
         rs.add(preNode.getValue());
         currentNode = null;
       }

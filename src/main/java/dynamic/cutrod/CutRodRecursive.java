@@ -51,6 +51,7 @@ public class CutRodRecursive {
     for (int k = 1; k <= n; k++) {
         int price =  prices[k] + solution(n - k, prices);
         if (priceMax < price) {
+          priceMax = price;
        }
     }
     return priceMax;

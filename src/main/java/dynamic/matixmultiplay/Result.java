@@ -4,9 +4,9 @@ public class Result {
   // 最优解的值
   Object expect;
   // 最优解的路径
-  String path;
+  Object path;
 
-  public Result(Object expect, String path) {
+  public Result(Object expect, Object path) {
     this.expect = expect;
     this.path = path;
   }
@@ -16,7 +16,7 @@ public class Result {
     return expect;
   }
 
-  public String getPath() {
+  public Object getPath() {
     return path;
   }
 

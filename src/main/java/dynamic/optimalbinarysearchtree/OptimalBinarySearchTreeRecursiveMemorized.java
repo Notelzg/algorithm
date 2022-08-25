@@ -5,6 +5,7 @@ import tree.BinaryTreeNode;
 import tree.PostOrderBinaryTree;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 递归+备忘录
@@ -23,10 +24,7 @@ public class OptimalBinarySearchTreeRecursiveMemorized {
     System.out.println();
     BinaryTreeNode<String> treeNode = postOrderTree(root, i, j, null);
     List<String> list = PostOrderBinaryTree.travel(treeNode);
-    System.out.println();
-    list.forEach(System.out::print);
-    System.out.println();
-    return new Result(expects[i][j], "a");
+    return new Result(expects[i][j], list.stream().collect(Collectors.joining(",")));
   }
 
   private static int solutionAux(int[] p, int[] q, int i, int j, int[][] expects, int[][] wij, int[][] root) {
