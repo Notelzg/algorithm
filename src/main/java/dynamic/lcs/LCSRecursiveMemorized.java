@@ -59,6 +59,7 @@ public class LCSRecursiveMemorized {
     if (xi < 0 || yi < 0) {
       return 0;
     }
+
     if (expects[xi][yi] > 0) {
       return expects[xi][yi];
     }
