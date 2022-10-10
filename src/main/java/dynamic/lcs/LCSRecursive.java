@@ -61,6 +61,7 @@ public class LCSRecursive {
     if (x.charAt(xi) == y.charAt(yi)) {
       return solution(x, xi - 1, y, yi - 1) + x.charAt(xi);
     }
+    // for test
     String xSub = solution(x, xi - 1, y, yi);
     String ySub = solution(x, xi, y, yi - 1);
     // 如果最长公共子串不唯一，这里的判断只会取其中的一个
