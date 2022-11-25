@@ -1,5 +1,10 @@
 package greedy;
 
+import dynamic.matixmultiplay.Result;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * 竞争共享资源的多个活动问题，目标是选出一个最大的互相兼容的活动集合
  * 假定有一个n个活动的集合S={a1, a2,...an}, 这些活动使用同一个资源
@@ -12,8 +17,10 @@ package greedy;
  * f1 <= f2 <= f3 .. <= fn.
  * 使用动态规划来处理
  * 第一步，构造最优子结构。
- * Sij, 标识包含从ai, 到aj的活动
- * 假设存在最优集合  Aij, 而 Ak是其中的一个元素
+ * Sij, 标识从ai结束之后开始的活动, 到aj开始之前的结束活动的集合，这里要注意的是 ai, aj  和 Sij是完全兼容的，
+ * 假设存在最优集合  Aij, 而 Ak是其中的一个元素, 如果ak是最优解的一个兼容元素，则ak一定和Sik, Skj 兼容
+ * 注意1：ak，可能和 ak-1是不兼容的，所以Sik不包含ak-1, 而是从ak开始，向前找到一个结束时间小于等于ak结束时间的第一个活动，
+ * 注意2：ak，可能和 ak+1是不兼容的，所以Skj不包含ak+1, 而是从ak开始，找到一个开始时间大于等于ai结束时间的第一个活动，
  * 则Aik = Aij ∩ Sik , Akj = Aij ∩ Skj
  * Aij = Aik ∪ Ak ∪ Akj
  * 则 Aij中最大兼容集合的个数等于 |Aij| = |Aik| + 1 + |Akj|
@@ -23,33 +30,45 @@ package greedy;
  * 集合
  * 但是有一个前提就是，需要确定 Ak属于兼容子合， 和前面 和后面
  * 所以这里需要就需要保存，兼容子集合的，边界，这样只需要判断一次就够了
+ * 第二步，构造递归公式
+ * Aij = 0 (i <j)
+ * Aij = 1 (i == j)
+ * Aij = Math.max(Aik + 1 + Akj) k ∈（i...j)
+ * 第三步计算最优值
+ * 主要难点就是，关于Sij的定义，一定要是 Si结束后开始，也就是和Si本身兼容，Si开始之前结束，和Sj也兼容。
+ * 第四步构造最优解
+ * 使用 compatibleSet[][]
+ * 记录Sij集合中，最大兼容子集的，最大的下标，因为小的兼容子集合，肯定是属于更大的兼容子集合的
+ * 所以不需要每个集合都重复记录兼容字集合。
+ * 最后只需要遍历从i，到j中，其下标大于0的，就是兼容子集合了。
+ * 由于数组下标都是从0开始，所以这里使用把0填充一下，否则无法区分0是兼容下标，还是不是，需要单独加判断逻辑，
+ * 使用填充法就比较简单的解决了这个问题。
  */
 public class ActivitySelector {
 
-  public static int solution(int[] s, int[] f, int start, int n) {
+  public static Result solution(int[] s, int[] f, int start, int n) {
     // 记录 集合内的，最大兼容子集合的元素数目
     int[][] aij = new int[s.length][s.length];
     // 记录集合内，最大兼容子集合的下标
-    int[][] max = new int[s.length][s.length];
+    int[][] compatibleSet = new int[s.length][s.length];
     for (int i = 0; i < s.length; i++) {
+      // 只有一个活动的时候，本身肯定是兼容，其本身下标，就是兼容集合。
       aij[i][i] = 1;
-      max[i][i] = i;
+      compatibleSet[i][i] = i;
     }
-    solutionAud(s, f, start, n, aij, max);
+    solutionAud(s, f, start, n, aij, compatibleSet);
     int preIndex = 0;
-    for (int i = start ; i <= n; i++) {
-      if (max[start][i] > 0 && preIndex != max[start][i]) {
-        System.out.printf(max[start][i] + ", ");
-        preIndex = max[start][i];
+    StringBuilder sb = new StringBuilder();
+    for (int i = start; i <= n; i++) {
+      if (compatibleSet[start][i] > 0 && preIndex != compatibleSet[start][i]) {
+        sb.append("a" + compatibleSet[start][i] + ",");
+        preIndex = compatibleSet[start][i];
       }
     }
-    return aij[start][n];
+    return new Result(aij[start][n], sb.toString());
   }
 
   private static int solutionAud(int[] s, int[] f, int i, int j, int[][] aij, int[][] max) {
-    if (i == j) {
-      return aij[i][j];
-    }
     if (i > j) {
       return 0;
     }
@@ -63,23 +82,21 @@ public class ActivitySelector {
     for (int k = i; k <= j; k++) {
       int leftCompatibleSetEndIndex = getLeftCompatibleSetEndIndex(s, f, k, i);
       int rightCompatibleSetStartIndex = getRightCompatibleSetEndIndex(s, f, k, j);
-      int left = solutionAud(s, f, i, leftCompatibleSetEndIndex, aij, max);
-      int right = solutionAud(s, f, rightCompatibleSetStartIndex, j, aij, max);
-      int total = left + right + 1;
-      int index = k;
-      if (right > 0) {
-        index = max[rightCompatibleSetStartIndex][j];
-      } else if (left > 0) {
-        index = max[i][leftCompatibleSetEndIndex];
+      int aik = solutionAud(s, f, i, leftCompatibleSetEndIndex, aij, max);
+      int akj = solutionAud(s, f, rightCompatibleSetStartIndex, j, aij, max);
+      int compatibleSetCount = aik + akj + 1;
+      // 由于ak和 Sik, Skj兼容，所以作为默认值完全没有问题，只有Akj存在，才需要功能新。
+      int compatibleSetIndex = k;
+      if (akj > 0) {
+        compatibleSetIndex = max[rightCompatibleSetStartIndex][j];
       }
-      if (total > maxCompatibleSetCount) {
-        maxCompatibleSetCount = total;
-        maxCompatibleSetIndex = index;
+      if (compatibleSetCount > maxCompatibleSetCount) {
+        maxCompatibleSetCount = compatibleSetCount;
+        maxCompatibleSetIndex = compatibleSetIndex;
       }
     }
     aij[i][j] = maxCompatibleSetCount;
     max[i][j] = maxCompatibleSetIndex;
-//    System.out.printf("i: %s, j: %s, index: %s\n", i, j, maxCompatibleSetIndex);
     return maxCompatibleSetCount;
   }
 
