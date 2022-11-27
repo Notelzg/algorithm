@@ -2,9 +2,6 @@ package greedy;
 
 import dynamic.matixmultiplay.Result;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 /**
  * 竞争共享资源的多个活动问题，目标是选出一个最大的互相兼容的活动集合
  * 假定有一个n个活动的集合S={a1, a2,...an}, 这些活动使用同一个资源
@@ -44,7 +41,8 @@ import java.util.ArrayList;
  * 由于数组下标都是从0开始，所以这里使用把0填充一下，否则无法区分0是兼容下标，还是不是，需要单独加判断逻辑，
  * 使用填充法就比较简单的解决了这个问题。
  */
-public class ActivitySelector {
+public class ActivitySelectorDynamic {
+
 
   public static Result solution(int[] s, int[] f, int start, int n) {
     // 记录 集合内的，最大兼容子集合的元素数目
