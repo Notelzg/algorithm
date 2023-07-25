@@ -2,8 +2,6 @@ package greedy;
 
 import dynamic.matixmultiplay.Result;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 /**
  * 竞争共享资源的多个活动问题，目标是选出一个最大的互相兼容的活动集合

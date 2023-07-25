@@ -1,9 +1,10 @@
 package tree;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 public class BinaryTreeHelper {
+  private BinaryTreeHelper() {
+  }
 
   public static <T extends Comparable> BinaryTreeNode<T> create(T[] arr) {
     if (null == arr || 0 == arr.length) {
@@ -26,7 +27,6 @@ public class BinaryTreeHelper {
       // 不存在则插入
       BinaryTreeNode<T> child = new BinaryTreeNode<>(t, root);
       root.setLeftChild(child);
-      return;
     } else {
       // 如果存在，则进行递归
       if (Objects.nonNull(root.getRightChild())) {
@@ -36,9 +36,6 @@ public class BinaryTreeHelper {
       // 不存在则插入
       BinaryTreeNode<T> child = new BinaryTreeNode<>(t, root);
       root.setRightChild(child);
-      return;
     }
   }
-
-
 }

@@ -12,10 +12,11 @@ class InOrderBinaryTreeTest {
 
   @Test
   void order() {
-    Integer[] t = new Integer[]{5,3,7,2,8};
+    Integer[] t = new Integer[]{5,3,7,4,2,8};
     BinaryTreeNode<Integer> treeNode = BinaryTreeHelper.create(t);
     List<Integer> orderRs = InOrderBinaryTree.order(treeNode);
     Integer[] rsArr = orderRs.toArray(new Integer[]{});
+    System.out.println(Arrays.toString(rsArr));
     Arrays.sort(t);
     Assertions.assertArrayEquals(t, rsArr);
   }

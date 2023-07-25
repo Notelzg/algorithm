@@ -36,9 +36,11 @@ public class CutRodRecursive {
    * 所以相同长度的子问题，也会重复计算，如果相同问题不再重复计算，那整个
    * 时间复杂度变成了多少呢？n^2。
    *
-   * @param n
-   * @param prices 长度为下标的钢条的价格，prices的长度是n+1,
-   *               因为需要prices[n] 标识整个钢条的长度, prices[0] 返回0，标识长度为0的钢条价格是0.
+   * @param n  钢条的长度
+   * @param prices 长度为下标的钢条的价格，prices的长度是n+1, 下标
+   *               因为需要prices[n] 标识长度为n的钢条的价格
+   *               prices[0] 返回0，标识长度为0的钢条价格是0.
+   *               prices[1] 返回1，标识长度为1的钢条价格是1.
    * @return
    */
   public static int solution(int n, int[] prices) {
