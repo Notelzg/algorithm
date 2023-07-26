@@ -45,6 +45,7 @@ public class CutRodRecursive {
     if (n == 0) {
       return 0;
     }
+    
     int priceMax = 0;
     // 这里从1开始，如果从0开始，就需要计算solutionRecursive(n),
     // 这个问题我们是通过这个for循环，拆为子问题进行计算的，如果从0开始，会造成无限循环

@@ -4,9 +4,22 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
-class BinaryTreeHelperTest {
-  @Test
+class T{
+
+}
+public class BinaryTreeHelperTest {
+  public BinaryTreeHelperTest() {
+    super();
+  }
+
+
+    @Test
   public void t() {
+
+    System.out.println(1 + 2 + "apple");
+    System.out.println( "apple" + 1 + 2 );
+
+
     boolean rs = (double) 1.1 == (float) 1.1;
     System.out.println(rs);
 //    System.out.printf("%s, %x, ", Double.doubleToLongBits(1.1), (float)1.1);
