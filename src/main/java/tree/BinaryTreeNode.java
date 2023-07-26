@@ -1,6 +1,7 @@
 package tree;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 public class BinaryTreeNode<T extends Comparable> {
   private BinaryTreeNode<T> leftChild;
@@ -54,5 +55,18 @@ public class BinaryTreeNode<T extends Comparable> {
     return "BinaryTreeNode{" +
         "value=" + value +
         '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    BinaryTreeNode<?> that = (BinaryTreeNode<?>) o;
+    return Objects.equals(value, that.value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(leftChild, rightChild, parent, value);
   }
 }

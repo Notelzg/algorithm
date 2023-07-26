@@ -18,6 +18,9 @@ public class BinaryTreeHelper {
   }
 
   private static <T extends Comparable> void insert(BinaryTreeNode<T> root, T t) {
+    if (Objects.isNull(t)) {
+      return;
+    }
     if (t.compareTo(root.getValue()) < 0) {
       // 如果存在，则进行递归
       if (Objects.nonNull(root.getLeftChild())) {
