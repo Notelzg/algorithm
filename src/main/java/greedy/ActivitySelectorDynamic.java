@@ -2,6 +2,7 @@ package greedy;
 
 import dynamic.matixmultiplay.Result;
 
+
 /**
  * 竞争共享资源的多个活动问题，目标是选出一个最大的互相兼容的活动集合
  * 假定有一个n个活动的集合S={a1, a2,...an}, 这些活动使用同一个资源
