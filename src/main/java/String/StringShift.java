@@ -42,8 +42,12 @@ package String;
  * 字符串的左右移
  */
 public class StringShift {
-  public String stringShift(String s, int[][] shift) {
+  public static String stringShift(String s, int[][] shift) {
     for (int[] ints : shift) {
+      ints[1] = ints[1] % s.length();
+      if (ints[1] == 0) {
+        continue;
+      }
       s = shift(ints, s);
     }
     return s;

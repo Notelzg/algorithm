@@ -33,13 +33,12 @@ public class AlgoTest {
       while (rightIndex > 0 && nums[rightIndex] > temp) {
         rightIndex--;
       }
-      if
 
       // 和左边的对比，比他小的不动，大的换位
       while (leftIndex < nums.length-1 && nums[leftIndex] < temp) {
         leftIndex++;
       }
-      nums[leftIndex]
+//      nums[leftIndex]
 
     }
   }
