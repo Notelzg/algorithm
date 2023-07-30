@@ -20,11 +20,14 @@ public class StringShiftTest {
    * * 输出："efgabcd"
    */
   @Test
-  public void stringShift() {
-    Assertions.assertEquals("cab", StringShift.stringShift("abc", string2ArrayArray("[[0,1],[1,2]]")));
-    Assertions.assertEquals("efgabcd", StringShift.stringShift("abcdefg", string2ArrayArray("[[1,1],[1,1],[0,2],[1,3]]")));
-    Assertions.assertEquals("a", StringShift.stringShift("a", string2ArrayArray("[[1,1],[1,1],[0,2],[1,3],[0,0]]")));
-    Assertions.assertEquals("bca", StringShift.stringShift("abc", string2ArrayArray("[[0,4]]")));
+  public void stringShift() throws InterruptedException {
+    while (true) {
+      Assertions.assertEquals("cab", StringShift.stringShift("abc", string2ArrayArray("[[0,1],[1,2]]")));
+      Assertions.assertEquals("efgabcd", StringShift.stringShift("abcdefg", string2ArrayArray("[[1,1],[1,1],[0,2],[1,3]]")));
+      Assertions.assertEquals("a", StringShift.stringShift("a", string2ArrayArray("[[1,1],[1,1],[0,2],[1,3],[0,0]]")));
+      Assertions.assertEquals("bca", StringShift.stringShift("abc", string2ArrayArray("[[0,4]]")));
+      Thread.sleep(10000);
+    }
   }
 
   static int[][] string2ArrayArray(String s) {
